@@ -3,9 +3,9 @@ const express = require("express");
 const bodyParser = require('body-parser')
 const v1Router = require('./src/routes/routerIndex.js')
 const cors = require('cors');
-
+const helmet = require('helmet')
 const app = express();
-
+app.use(helmet())
 app.use(cors());
 app.use(bodyParser.json()); 
 app.use(express.urlencoded({ extended: true }));
