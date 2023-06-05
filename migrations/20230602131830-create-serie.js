@@ -9,9 +9,6 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      etag: {
-        type: Sequelize.STRING
-      },
       serie_id: {
         type: Sequelize.INTEGER
       },

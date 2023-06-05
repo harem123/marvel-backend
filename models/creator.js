@@ -16,7 +16,10 @@ module.exports = (sequelize, DataTypes) => {
   creator.init({
     creator_id: DataTypes.INTEGER,
     name: DataTypes.STRING,
-    resource_uri: DataTypes.STRING,
+    resource_uri: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
     role: DataTypes.STRING
   }, {
     sequelize,

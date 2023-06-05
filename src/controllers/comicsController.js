@@ -10,53 +10,54 @@ const getId = (string)=>{
    return number
 }
 
+const createComicRelations = (array, propertyToSearch) => array.map((object) => ({
+   comicId: object.comicID,
+   [propertyToSearch]: object[propertyToSearch]
+ }));
+
 const createComicsData= (comicsData)=>{
    const etag = comicsData.etag
    
    const comicsArray = comicsData.data.results.map((comicInfo)=>{
-      const creationTimeSpan = comicInfo.dates[0].date
       const comic = {
          etag:etag,
          comicId:comicInfo.id,
          title:comicInfo.title,
          createdData:comicInfo.dates[0].date,
-         creationTimeSpan:creationTimeSpan,
          imageUrl:`${comicInfo.thumbnail.path}.${comicInfo.thumbnail.extension}`
         }
       return comic
    })
    
    const creatorsArray = comicsData.data.results.flatMap((comic) =>
-   comic.creators.items.map((creatorInfo) => { 
-      const creatorId = getId(creatorInfo.resourceURI)
-      const creator = {
-      creatorId:creatorId,
-      name: creatorInfo.name, 
+  comic.creators.items.map((creatorInfo) => {
+    const creatorId = getId(creatorInfo.resourceURI);
+    const creator = {
+      comicID: comic.id, // Add the comicID property
+      creatorId: creatorId,
+      name: creatorInfo.name,
       role: creatorInfo.role,
-      resourceUri:creatorInfo.resourceURI} 
-      return creator
-   }
-   )
- );
+      resourceUri: creatorInfo.resourceURI,
+    };
+    return creator;
+  })
+);
 
  const seriesArray = comicsData.data.results.map((comic) => {
      const serieId = getId(comic.series.resourceURI)
      const serie = {
+      comicID:comic.id,
      serieId: serieId,
      name: comic.series.name,
      resourceURI: comic.series.resourceURI
    }
      return serie
  });
-   const comicSerieArray = (comicsObj, seriesObj) => {
-      comicsObj.map((comicObj)=>{
-         seriesObj.filter(serie=> serie.serieId == comicObj.id)
-      })
-   }
-   return {creatorsArray}
+
+   const comicAndSerieRelation = createComicRelations(seriesArray,"serieId")
+   const comicAndCreatorRelation = createComicRelations(creatorsArray,"creatorId")
+   return {comicAndCreatorRelation}
 }
-
-
 
 const validateData = (data) => {
   

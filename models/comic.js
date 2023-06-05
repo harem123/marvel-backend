@@ -15,10 +15,12 @@ module.exports = (sequelize, DataTypes) => {
   }
   comic.init({
     etag: DataTypes.STRING,
-    comic_id: DataTypes.INTEGER,
+    comic_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
     title: DataTypes.STRING,
     created_date: DataTypes.DATE,
-    creation_timespan: DataTypes.STRING,
     image_url: DataTypes.STRING
   }, {
     sequelize,

@@ -9,9 +9,6 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      etag: {
-        type: Sequelize.STRING
-      },
       creator_id: {
         type: Sequelize.INTEGER
       },
@@ -19,6 +16,7 @@ module.exports = {
         type: Sequelize.STRING
       },
       resource_uri: {
+        allowNull: false,
         type: Sequelize.STRING
       },
       role: {

@@ -15,9 +15,12 @@ module.exports = (sequelize, DataTypes) => {
   }
   serie.init({
     
+    resource_uri: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
     serie_id: DataTypes.INTEGER,
-    name: DataTypes.STRING,
-    resource_uri: DataTypes.STRING
+    name: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'serie',

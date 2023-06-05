@@ -13,9 +13,11 @@ module.exports = {
         type: Sequelize.STRING
       },
       comic_id: {
+        allowNull: false,
         type: Sequelize.INTEGER
       },
       title: {
+        allowNull: false,
         type: Sequelize.STRING
       },
       created_date: {
