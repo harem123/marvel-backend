@@ -10,7 +10,7 @@ const getId = (string)=>{
    return number
 }
 
-const createComics= (comicsData)=>{
+const createComicsData= (comicsData)=>{
    const etag = comicsData.etag
    
    const comicsArray = comicsData.data.results.map((comicInfo)=>{
@@ -48,9 +48,16 @@ const createComics= (comicsData)=>{
    }
      return serie
  });
-
+   const comicSerieArray = (comicsObj, seriesObj) => {
+      comicsObj.map((comicObj)=>{
+         seriesObj.filter(serie=> serie.serieId == comicObj.id)
+      })
+   }
    return {creatorsArray}
 }
+
+
+
 const validateData = (data) => {
   
    return {data:data, isComplete:true}
@@ -59,7 +66,7 @@ const validateData = (data) => {
 const postBulkComics = catchAsync( async (req,res,next ) => {
   const bulkArray = req.body
    try {
-      const comicObjects = createComics(bulkArray)
+      const comicObjects = createComicsData(bulkArray)
 
       console.log(comicObjects)
       const response = "respnse"
