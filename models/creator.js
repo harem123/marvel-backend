@@ -14,7 +14,6 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   creator.init({
-    etag: DataTypes.STRING,
     creator_id: DataTypes.INTEGER,
     name: DataTypes.STRING,
     resource_uri: DataTypes.STRING,

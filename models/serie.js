@@ -14,7 +14,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   serie.init({
-    etag: DataTypes.STRING,
+    
     serie_id: DataTypes.INTEGER,
     name: DataTypes.STRING,
     resource_uri: DataTypes.STRING
