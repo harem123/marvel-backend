@@ -11,6 +11,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      serie.belongsToMany(models.comic, { through: 'comic_serie' })
     }
   }
   serie.init({
@@ -27,3 +28,4 @@ module.exports = (sequelize, DataTypes) => {
   });
   return serie;
 };
+

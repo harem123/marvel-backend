@@ -59,24 +59,13 @@ const createComicsData= (comicsData)=>{
    return {comicAndCreatorRelation}
 }
 
-const validateData = (data) => {
-  
-   return {data:data, isComplete:true}
-}
-
 const postBulkComics = catchAsync( async (req,res,next ) => {
   const bulkArray = req.body
    try {
-      const comicObjects = createComicsData(bulkArray)
-
-      console.log(comicObjects)
-      const response = "respnse"
-      endpointResponse({
-         res,
-         message: "Comics Data recieved successfully",
-         body: response,
-       });
-   } catch (error) {
+     comicsStructure = createComicsData(bulkArray)
+     console.log(comicsStructure)
+     }
+      catch (error) {
       console.log(error)
       res.status(500).send({status:"FAILED"});
    }
