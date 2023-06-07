@@ -2,7 +2,7 @@ module.exports = {
     up: (queryInterface, Sequelize) => {
       // Product belongsToMany Tag
       return queryInterface.createTable(
-        'comic_serie',
+        'comic_series',
         {
           createdAt: {
             allowNull: false,
@@ -26,6 +26,6 @@ module.exports = {
   
     down: (queryInterface, Sequelize) => {
       // remove table
-      return queryInterface.dropTable('comic_serie');
+      return queryInterface.dropTable('comic_series');
     },
   };

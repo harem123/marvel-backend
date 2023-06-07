@@ -7,9 +7,7 @@ const v1createServiceComic= require("../services/createComicService")
 const postBulkComics = catchAsync( async (req,res,next ) => {
   const bulkArray = req.body
    try {
-     
-     
-     createdComics= v1createServiceComic.postSeries(bulkArray)
+     createdComics= v1createServiceComic.createComics(bulkArray)
      }
       catch (error) {
       console.log(error)
@@ -17,7 +15,6 @@ const postBulkComics = catchAsync( async (req,res,next ) => {
    }
 }
 )
-
 module.exports = {
    postBulkComics
 }

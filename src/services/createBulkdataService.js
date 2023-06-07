@@ -1,26 +1,16 @@
 
-const getId = (string)=>{
-  const sections = string.split('/');
-  const lastSection = sections[sections.length - 1];
-  const number = lastSection.match(/\d+/)[0];
-  return number
-}
-
-const createComicRelations = (array, propertyToSearch) => array.map((object) => (
-  {
-   comicId: object.comicID,
-   [propertyToSearch]: object[propertyToSearch]
- }));
-
  const createComicsData = (comicsData) => {
   const etag = comicsData.etag;
-  const comicsArray = comicsData.data.results.map((comicInfo) => ({
+  const comicsArray = comicsData.data.results.map((comicInfo) => {
+    const year = splitYear(comicInfo.title)
+    const comic = {
      etag: etag,
-     comicId: comicInfo.id,
+     comic_id: comicInfo.id,
      title: comicInfo.title,
-     createdData: comicInfo.dates[0].date,
-     imageUrl: `${comicInfo.thumbnail.path}.${comicInfo.thumbnail.extension}`
-  }));
+     year: year,
+     image_url: `${comicInfo.thumbnail.path}.${comicInfo.thumbnail.extension}`}
+     return comic
+  });
   return comicsArray ;
 };
 
@@ -30,7 +20,7 @@ const createCreatorsData = (comicsData) => {
       const creatorId = getId(creatorInfo.resourceURI);
       const creator = {
         comic_id: comic.id, // Add the comicID property
-        creatorId: creatorId,
+        creator_id: creatorId,
         name: creatorInfo.name,
         role: creatorInfo.role,
         resource_uri: creatorInfo.resourceURI,
@@ -46,22 +36,43 @@ const createSeriesData = (comicsData) => {
     const serieId = getId(comic.series.resourceURI)
     const serie = {
      comic_id:comic.id,
-    serieId: serieId,
-    name: comic.series.name,
-    resource_uri: comic.series.resourceURI
+     serie_id: serieId,
+     name: comic.series.name,
+     resource_uri: comic.series.resourceURI
   }
     return serie
 });
   return  seriesArray ;
 };
 
-//const comicAndSerieRelation = createComicRelations(seriesArray,"serieId")
-//const comicAndCreatorRelation = createComicRelations(creatorsArray,"creatorId")
+const getId = (string)=>{
+  const sections = string.split('/');
+  const lastSection = sections[sections.length - 1];
+  const number = lastSection.match(/\d+/)[0];
+  return number
+}
 
+const createRelations = (array, propertyToSearch) => array.map((object) => (
+  {
+   comic_id: object.comic_id,
+   [propertyToSearch]: object[propertyToSearch]
+ }));
 
+const splitYear = (title) => {
+  const splitArray = title.split(" (");
+  const splitSigns = splitArray[1].split(")");
+  if ((!isNaN(splitSigns[0]))&& (splitSigns[0] !== "undefined")) {
+    // It's a number
+    return splitSigns[0]
+  }
+}
+  
+//const createComicRelat = (seriesArray) =>(createComicRelations(seriesArray,"serieId"))
+ //comicAndCreatorRelation = createComicRelations(creatorsArray,"creatorId")
 
 module.exports = {
   createComicsData,
   createCreatorsData,
-  createSeriesData
+  createSeriesData,
+  createRelations
 }
