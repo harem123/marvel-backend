@@ -9,10 +9,10 @@ const validateEtag = catchAsync(async (req, res, next) => {
         const result = await comicModel.findAll({
             attributes: ['etag'],
             where: {
-              etag: etag
+                etag: etag
             }
-          });
-        console.log(result)
+        });
+        
         if (result.length === 0) {
             // No records found
             next()
@@ -21,8 +21,11 @@ const validateEtag = catchAsync(async (req, res, next) => {
             etagModel.create({ etag: etag })
         }
     } catch (error) {
-        console.log(error)
-        res.status(500).send({ status: "FAILED" });
+
+        const httpError = createHttpError(
+            error.statusCode || 500,
+            `[comics - POST]: ${error.message}`,)
+        return next(httpError)
     }
 })
 
