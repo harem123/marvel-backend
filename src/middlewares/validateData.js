@@ -23,12 +23,19 @@ const validateData = (toValidateData) => {
         });
         next();
       } else {
-        res.status(500).send({status:"FAILED"});
+        const error = new createHttpError.BadRequest(
+          `Invalid JSON}`
+      
+      ); next(error)
       }
     } catch (error) {
-       console.log(error)
-       res.status(500).send({status:"FAILED"});
-    }
+        
+      const httpError = createHttpError(
+          error.statusCode,
+          `[comics - POST]: ${error.message}`,
+        )
+        return next(httpError)
+ }
  })
  
  module.exports = {

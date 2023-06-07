@@ -4,18 +4,24 @@ const { catchAsync } = require('../helpers/catchAsync')
 const { ErrorObject } = require('../helpers/error')
 const v1createServiceComic= require("../services/createComicService")
 
-const postBulkComics = catchAsync( async (req,res,next ) => {
+const getInfo = catchAsync( async (req,res,next ) => {
   const bulkArray = req.body
    try {
-     createdComics= v1createServiceComic.createComics(bulkArray)
+    const error = new createHttpError.BadRequest(
+        `Invalid JSON}`
+    
+    ); next(error)
      }
       catch (error) {
-      console.log(error)
+        
+        const httpError = createHttpError(
+            error.statusCode,
+            `[comics - GET]: ${error.message}`,
+          )
+          return next(httpError)
    }
 }
 )
 module.exports = {
-   postBulkComics
+   getInfo
 }
-
-
